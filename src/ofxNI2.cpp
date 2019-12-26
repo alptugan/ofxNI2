@@ -233,6 +233,13 @@ void Stream::start()
 	{
 		assert_error(stream.start());
 	}
+    
+    openni::SensorType type = stream.getSensorInfo().getSensorType();
+    string streamType;
+    if(type == openni::SENSOR_IR) streamType = "IR";
+    else if(type == openni::SENSOR_COLOR) streamType = "Colour";
+    else if(type == openni::SENSOR_DEPTH) streamType = "Depth";
+    ofLogNotice() << streamType << " stream dimensions: " << stream.getVideoMode().getResolutionX() << " x " << stream.getVideoMode().getResolutionY();
 }
 
 void Stream::onNewFrame(openni::VideoStream&)
@@ -353,8 +360,9 @@ void IrStream::setPixels(openni::VideoFrameRef frame)
 	if (m.getPixelFormat() == openni::PIXEL_FORMAT_GRAY8)
 	{
 		const unsigned char *src = (const unsigned char*)frame.getData();
-		unsigned char *dst = pix.getBackBuffer().getPixels();
-
+		// edit
+        //unsigned char *dst = pix.getBackBuffer().getPixels();
+        unsigned char *dst = pix.getBackBuffer().getData();
 		for (int i = 0; i < num_pixels; i++)
 		{
 			dst[0] = src[0];
@@ -365,8 +373,11 @@ void IrStream::setPixels(openni::VideoFrameRef frame)
 	else if (m.getPixelFormat() == openni::PIXEL_FORMAT_GRAY16)
 	{
 		const unsigned short *src = (const unsigned short*)frame.getData();
-		unsigned char *dst = pix.getBackBuffer().getPixels();
+    // edit
+		//unsigned char *dst = pix.getBackBuffer().getPixels();
 
+    unsigned char *dst = pix.getBackBuffer().getData();
+    
 		for (int i = 0; i < num_pixels; i++)
 		{
 			dst[0] = src[0] >> 2;
@@ -408,8 +419,10 @@ void ColorStream::setPixels(openni::VideoFrameRef frame)
 	if (m.getPixelFormat() == openni::PIXEL_FORMAT_RGB888)
 	{
 		const unsigned char *src = (const unsigned char*)frame.getData();
-		unsigned char *dst = pix.getBackBuffer().getPixels();
-		
+        //edit:
+        //unsigned char *dst = pix.getBackBuffer().getPixels();
+		unsigned char *dst = pix.getBackBuffer().getData();
+    
 		for (int i = 0; i < num_pixels; i++)
 		{
 			dst[0] = src[0];
@@ -512,12 +525,14 @@ void DepthShader::setup(DepthStream &depth)
 	linkProgram();
 }
 
-ofVec3f DepthStream::getWorldCoordinateAt(int x, int y)
+glm::vec3 DepthStream::getWorldCoordinateAt(int x, int y)
 {
-	ofVec3f v;
+	glm::vec3 v;
 	
 	const ofShortPixels& pix = getPixelsRef();
-	const unsigned short *ptr = pix.getPixels();
+    // edit
+	//const unsigned short *ptr = pix.getPixels();
+    const unsigned short *ptr = pix.getData();
 	unsigned short z = ptr[pix.getWidth() * y + x];
 	
 	openni::CoordinateConverter::convertDepthToWorld(stream, x, y, z, &v.x, &v.y, &v.z);

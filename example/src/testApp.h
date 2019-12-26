@@ -2,6 +2,9 @@
 
 #include "ofMain.h"
 
+#include "ofxNI2.h"
+
+
 class testApp : public ofBaseApp
 {
 public:
@@ -20,4 +23,13 @@ public:
 	void windowResized(int w, int h);
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
+    
+    ofxNI2::Device device;
+    ofxNI2::IrStream ir;
+    //ofxNI2::ColorStream color;
+    ofxNI2::DepthStream depth;
+    
+    ofFbo depthFbo;
+    
+    int w,h;
 };

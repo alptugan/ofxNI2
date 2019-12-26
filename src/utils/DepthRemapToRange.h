@@ -9,8 +9,12 @@ namespace ofxNI2
 		int N = src.getWidth() * src.getHeight();
 		dst.allocate(src.getWidth(), src.getHeight(), 1);
 		
-		const unsigned short *src_ptr = src.getPixels();
-		unsigned char *dst_ptr = dst.getPixels();
+    // edit
+    //  unsigned char *dst_ptr = dst.getPixels();
+	//	const unsigned short *src_ptr = src.getPixels();
+		
+    unsigned char *dst_ptr = dst.getData();
+    const unsigned short *src_ptr = src.getData();
 		
 		float inv_range = 1. / (_far - _near);
 		

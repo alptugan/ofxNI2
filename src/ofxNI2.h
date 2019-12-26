@@ -5,7 +5,7 @@
 #include "OpenNI.h"
 #include <assert.h>
 
-//#define HAVE_NITE2
+#define HAVE_NITE2
 
 #include "utils/DoubleBuffer.h"
 
@@ -195,7 +195,7 @@ public:
 	ofShortPixels& getPixelsRef() { return pix.getFrontBuffer(); }
 	ofPixels getPixelsRef(int near, int far, bool invert = false);
 	
-	ofVec3f getWorldCoordinateAt(int x, int y);
+	glm::vec3 getWorldCoordinateAt(int x, int y);
 	
 	inline void draw(float x = 0, float y = 0) { ofxNI2::Stream::draw(x, y); }
 	void draw(float x, float y, float w, float h);

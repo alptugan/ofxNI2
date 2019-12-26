@@ -48,8 +48,8 @@ public:
 	
 	inline nite::UserId getId() const { return userdata.getId(); }
 	
-	ofVec3f getCenterOfMass() const { return center_of_mass; }
-	ofVec3f getCenterOfBone() const { return center_of_bone; }
+	glm::vec3 getCenterOfMass() const { return center_of_mass; }
+	glm::vec3 getCenterOfBone() const { return center_of_bone; }
 	float getActivity() const { return activity; }
 	
 	inline bool isNew() const { return userdata.isNew(); }
@@ -73,8 +73,8 @@ protected:
 	
 	float activity;
 	
-	ofVec3f center_of_mass;
-	ofVec3f center_of_bone;
+	glm::vec3 center_of_mass;
+	glm::vec3 center_of_bone;
 	
 	void buildSkeleton();
 	void updateUserData(const nite::UserData& data);

@@ -242,10 +242,15 @@ void User::updateUserData(const nite::UserData& data)
 	status_string = ss.str();
 	
 	const nite::Point3f& pos = userdata.getCenterOfMass();
-	center_of_mass.set(pos.x, pos.y, -pos.z);
+	//center_of_mass.set(pos.x, pos.y, -pos.z);
+    center_of_mass.x = pos.x;
+    center_of_mass.y = pos.y;
+    center_of_mass.z = -pos.z;
+    
 	
 	Joint &torso = joints[nite::JOINT_TORSO];
-	activity += (torso.getPosition().distance(center_of_bone) - activity) * 0.1;
+	//activity += (torso.getPosition().distance(center_of_bone) - activity) * 0.1;
+    activity += (glm::distance(torso.getPosition(), center_of_bone) - activity) * 0.1;
 	center_of_bone = torso.getPosition();
 }
 
@@ -321,7 +326,7 @@ void Joint::draw()
 	if (parent)
 	{
 		parent->transformGL();
-		ofLine(ofVec3f(0, 0, 0), getPosition());
+		ofDrawLine(ofVec3f(0, 0, 0), getPosition());
 		parent->restoreTransformGL();
 	}
 
@@ -333,7 +338,7 @@ void Joint::draw()
 	ofPushStyle();
 	ofFill();
 	ofSetColor(255);
-	ofCircle(0, 0, 20 * getPositionConfidence());
+	ofDrawCircle(0, 0, 20 * getPositionConfidence());
 	ofPopStyle();
 	
 	restoreTransformGL();

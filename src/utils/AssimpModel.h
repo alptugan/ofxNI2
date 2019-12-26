@@ -11,9 +11,9 @@
 #include "ofMain.h"
 #include "ofxNiTE2.h"
 #include "ofxAssimpModelLoader.h"
-#include "aiMesh.h"
+/*#include "aiMesh.h"
 #include "aiScene.h"
-
+*/
 using namespace nite;
 
 namespace ofxNiTE2
@@ -94,7 +94,7 @@ public:
                 
                 // The voodoo trick(s), found using bruteforce trial and error
                 // TODO: Translate this into some proper quaternion multipication
-                ofVec3f r = joint.getOrientationQuat().getEuler() / 180 * PI;
+                glm::vec3 r = joint.getOrientationEulerRad() / 180 * PI;
                 switch(type){
                     case JOINT_TORSO: {
                         aiMatrix4x4 rx, ry, rz;
@@ -120,7 +120,7 @@ public:
                 }
                 
                 if(type == JOINT_TORSO){
-                    ofVec3f jointPos = joint.getPosition();
+                    glm::vec3 jointPos = joint.getPosition();
                     float scale = getNormalizedScale();
                     transform.a4 = jointPos.x / scale;
                     transform.b4 = jointPos.y / scale;
