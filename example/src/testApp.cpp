@@ -11,6 +11,8 @@ void testApp::setup()
 	ofSetVerticalSync(true);
 	ofBackground(0);
 	
+    ofSetWindowShape(w*2, h);
+    
 	//device = new ofxNI2::Device;
 	//device->setup();
     device.setup();
@@ -66,7 +68,7 @@ void testApp::draw()
         
     ofPixels px = depth.getPixelsRef(ofGetMouseY(), ofGetMouseX());
         depthFbo.readToPixels(px);
-        //depth.draw(w, 0);
+        depth.draw(w, 0);
     depthFbo.draw(w, 0);
 	
 }

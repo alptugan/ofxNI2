@@ -1,5 +1,16 @@
 Setup
 ========
+Working Setup;
+- OS : High Sierra 10.13.6
+- oF : v.0.11
+- GL version : (2,1)
+
+Fixed the addon for ASUS Xtion Sensor to run with oF v.0.11.0. Cannot make run the example-assimp-model & example-user-tracker projects.
+
+**Cannot make it run with Kinect v.01!
+**
+
+![alt](cover.png)
 
 OSX
 --------
